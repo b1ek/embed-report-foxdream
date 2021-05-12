@@ -1,2 +1,4 @@
-# embed-report-foxdream
-EMbed report bot for foxdream server
+# Embed report foxdream
+Embed report bot for foxdream server
+
+current version: 1.0.3 BETA
