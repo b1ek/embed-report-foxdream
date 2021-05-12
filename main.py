@@ -1,6 +1,19 @@
 import discord
-import config
 
+print("""
+             ===========
+            Embed report bot
+              made by blek
+github.com/b1ek/embed-report-foxdream
+             ===========
+             """)
+token = input("Paste your bot token right here: ")
+reportchannel = input("Paste your report channel ID: ")
+logchannel = input("Paste your log channel ID: ")
+respect_admin = input("Respect admin? (Y/N): ")
+if respect_admin == Y or y: respect_admin = True
+if respect_admin == N or n: respect_admin = False
+else: respect_admin = False
 _client = discord.Client()
 #_startup = str(__import__(datetime).datetime.now())
 
@@ -21,9 +34,8 @@ def report_parse(reportmsg):
         return msglist
 
 async def log(logmessage):
-    logchannel = _client.get_channel(config.logchannel)
+    logchannel = _client.get_channel(logchannel)
     await logchannel.send(logmessage)
-    await _client.get_channel(841814020235460689).send(logmessage)
     print(logmessage)
 
 # Репорт
@@ -72,15 +84,15 @@ async def on_message(message):
     if message.content.startswith("#IGNORED"):
         return
     
-    reportchannel = _client.get_channel(config.reportchannel)
+    reportchannel = _client.get_channel(reportchannel)
     
     if message.author == _client.user: return
 
 
     if message.channel.type == discord.ChannelType.private: return
     
-    #if config.respect_admin: adm = message.author.guild_permissions.administrator
-    if config.respect_admin: adm = message.author.display_name.startswith("✦")
+    #if respect_admin: adm = message.author.guild_permissions.administrator
+    if respect_admin: adm = message.author.display_name.startswith("✦")
     
     await log(f"Получено сообщение: **{message.content}**\nОт: **{message.author}**\nВ: **<#{message.channel.id}>**")
     
@@ -96,4 +108,4 @@ async def on_message(message):
             await message.channel.send(embed=struct_embed(returnval, message))
             await log(f"Жалоба:\n{str(returnval)}")
 
-_client.run(config.token)
+_client.run(token)
